@@ -11,17 +11,21 @@ But dart have different name convention, see the code below.
 ```dart
 import 'package:json5/json5.dart';
 
-main() {
-  var obj = JSON5.parse(
-    '{  /*allow comment*/               '
-    '  name: {first: "phat"},           '
-    '  lang: ["C++", "dart", "kotlin"]  '
-    '  nums: [NaN, Infinity, -Infinity] '
-    '} // end object                    ' 
-  );
+void main() {
+  var obj = JSON5.parse('{                '
+      '  /*  comment block  */            '
+      '  name: {first: "phat"},           '
+      '  lang: ["C++", "dart", "kotlin"], '
+      '  nums: [NaN, Infinity, -Infinity] '
+      '} // end object                    ');
 
-  // pretty with space:2
-  var str = JSON5.stringify(obj, space:2);
+  var compact = JSON5.stringify(obj);
+
+  print(compact);
+
+  var pretty = JSON5.stringify(obj, space: 2);
+
+  print(pretty);
 }
 ```
 
