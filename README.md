@@ -1,4 +1,5 @@
 ## JSON5 for dart and flutter
+![Dart CI](https://github.com/damphat/json5-dart/workflows/Dart%20CI/badge.svg)
 
 This *dart-package* is a ported version of [json5](https://github.com/json5/json5) which is written in pure *javascript*.
 
