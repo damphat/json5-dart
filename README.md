@@ -29,8 +29,10 @@ void main() {
 }
 ```
 
-## Limitations
-- [ ] cannot parse streams
-- [ ] cannot run async mode
-- [ ] only Map<> for json object
-- [ ] only List<> for json array
+## Current limitations
+- It can parse String only, stream is not support
+- Only serialize classes which implement List and Map
+
+## References
+[json5](https://json5.org/)
+[json5 in javascript](https://github.com/json5/json5)
