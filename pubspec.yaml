@@ -1,5 +1,5 @@
 name: json5
-description: JSON in dart (a port from json5 for nodejs)
+description: JSON for dart and flutter (a port from json5 for nodejs)
 version: 0.5.0
 homepage: https://github.com/damphat/json5-dart
 
