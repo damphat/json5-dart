@@ -1,3 +1,6 @@
+## 0.5.1
+- fix: cannot stringify object if their keys are not string . 
+
 ## 0.5.0
 - supports Map, List, null, num, bool, String
 - `JSON5.parse( aString );` 

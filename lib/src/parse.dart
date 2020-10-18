@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:json5/src/syntax_exception.dart';
 
 import 'token.dart';
@@ -1058,7 +1057,8 @@ SyntaxException invalidIdentifier() {
 }
 
 void separatorChar(c) {
-  stderr.writeln(
+  // FIXME: how to print error
+  print(
       "JSON5: '${formatChar(c)}' in strings is not valid ECMAScript; consider escaping");
 }
 
