@@ -1,7 +1,11 @@
 import 'package:json5/json5.dart';
 import 'package:test/test.dart';
 
+import 'bugs.dart';
+
 void main() {
+  bugs();
+
   group('JSON.parse', () {
     test('primitives', () {
       expect(JSON5.parse('null'), isNull);
