@@ -1,3 +1,6 @@
+## 0.5.2
+- support runtime-js, flutter web
+
 ## 0.5.1
 - fix: cannot stringify object if their keys are not string . 
 
