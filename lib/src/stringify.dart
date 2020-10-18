@@ -88,7 +88,7 @@ class _Stringify {
     return quoteChar + product + quoteChar;
   }
 
-  String serializeProperty(key, holder) {
+  String serializeProperty(dynamic key, dynamic holder) {
     Object value = holder[key];
 
     if (value == null) return 'null';
@@ -113,8 +113,8 @@ class _Stringify {
     return null; // undefined
   }
 
-  String serializeKey(key) {
-    if (key.length == 0) {
+  String serializeKey(String key) {
+    if (key.isEmpty) {
       return quoteString(key);
     }
 
@@ -147,7 +147,7 @@ class _Stringify {
     for (final key in keys) {
       final propertyString = serializeProperty(key, value);
       if (propertyString != null) {
-        var member = serializeKey(key) + ':';
+        var member = serializeKey(key.toString()) + ':';
         if (gap != '') {
           member += ' ';
         }
@@ -177,7 +177,7 @@ class _Stringify {
     return final_;
   }
 
-  String serializeArray(value) {
+  String serializeArray(List value) {
     if (stack.contains(value)) {
       throw Exception('Converting circular structure to JSON5');
     }
