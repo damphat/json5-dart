@@ -1,4 +1,3 @@
-
 class Token {
   final String type;
   final Object value;
