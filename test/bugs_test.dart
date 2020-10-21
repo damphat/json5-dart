@@ -1,7 +1,15 @@
 import 'package:json5/json5.dart';
 import 'package:test/test.dart';
 
-void bugs() {
+void main() {
+  test('should return type Map<string, dynamic>', () {
+    // BUG:
+    // '_InternalLinkedHashMap<dynamic, dynamic>' is not
+    // a subtype of 'Map<String, dynamic>'
+    Map<String, dynamic> obj = JSON5.parse("{x: 1}");
+    expect(obj, {'x': 1});
+  });
+
   test('non_string_keys', () {
     expect(JSON5.stringify({1: 1}), "{'1':1}");
     expect(JSON5.stringify({-1: 1}), "{'-1':1}");
