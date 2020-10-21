@@ -1,3 +1,6 @@
+## 0.5.3
+- fix: json5Decode() should return Map<String, dynamic> instead of Map<dynamic, dynamic> 
+
 ## 0.5.2
 - support runtime-js, flutter web
 
