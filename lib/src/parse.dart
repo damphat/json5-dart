@@ -951,11 +951,11 @@ void push() {
     case 'punctuator':
       switch (token.value) {
         case '{':
-          value = {};
+          value = <String, dynamic>{};
           break;
 
         case '[':
-          value = [];
+          value = <dynamic>[];
           break;
       }
 
