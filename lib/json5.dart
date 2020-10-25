@@ -10,6 +10,8 @@ import 'src/stringify.dart' as render;
 /// If you love dart convention. You can also use [json5Encode()] and
 ///  [json5Decode()] instead.
 abstract class JSON5 {
+  JSON5._();
+
   /// Convert the object to json5 string.
   ///
   /// Currently, only objects that inherit from [Map] or [List]
