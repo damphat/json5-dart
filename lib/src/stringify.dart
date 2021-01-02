@@ -58,7 +58,7 @@ class _Stringify {
           continue;
 
         case '\0':
-          if (util.isDigit(value[i + 1])) {
+          if ((i + 1 < value.length) && util.isDigit(value[i + 1])) {
             product += '\\x00';
             continue;
           }

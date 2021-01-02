@@ -18,4 +18,10 @@ void main() {
     expect(JSON5.stringify({false: 1}), '{false:1}');
     expect(JSON5.stringify({double.infinity: 1}), '{Infinity:1}');
   });
+
+  test('null char at the end', () {
+    // BUG:
+    // RangeError: not in inclusive range 0..3
+    expect(JSON5.stringify('abc\0'), "'abc\\0'");
+  });
 }
