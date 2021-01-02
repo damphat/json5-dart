@@ -1,3 +1,6 @@
+## 0.5.4
+- Fix: RangeError when stringify a string with ending '\0'
+
 ## 0.5.3
 - fix: json5Decode() should return Map<String, dynamic> instead of Map<dynamic, dynamic> 
 
