@@ -41,7 +41,7 @@ class _Stringify {
       '\r': '\\r',
       '\t': '\\t',
       '\v': '\\v',
-      '\0': '\\0',
+      '\u0000': '\\0',
       '\u2028': '\\u2028',
       '\u2029': '\\u2029',
     };
@@ -57,7 +57,7 @@ class _Stringify {
           product += c;
           continue;
 
-        case '\0':
+        case '\u0000':
           if ((i + 1 < value.length) && util.isDigit(value[i + 1])) {
             product += '\\x00';
             continue;

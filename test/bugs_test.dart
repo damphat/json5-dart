@@ -22,6 +22,14 @@ void main() {
   test('null char at the end', () {
     // BUG:
     // RangeError: not in inclusive range 0..3
-    expect(JSON5.stringify('abc\0'), "'abc\\0'");
+    expect(JSON5.stringify('abc\u0000'), "'abc\\0'");
+  });
+
+  test('dart does not support backslash-zero escape (\\0)', () {
+    // BUG:
+    // javascript has '\0' but dart has not
+    expect(JSON5.stringify('0'), "'0'");
+    expect(JSON5.stringify('\0'), "'0'");
+    expect(JSON5.stringify('\u0000'), "'\\0'");
   });
 }

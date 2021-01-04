@@ -1,3 +1,6 @@
+## 0.5.5
+- hotfix: dart not support '\0' escape
+
 ## 0.5.4
 - Fix: RangeError when stringify a string with ending '\0'
 

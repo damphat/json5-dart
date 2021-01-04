@@ -749,7 +749,7 @@ String escape() {
         throw invalidChar(read());
       }
 
-      return '\0';
+      return '\u0000';
 
     case 'x':
       read();
@@ -1073,7 +1073,7 @@ String formatChar(String c) {
     '\r': '\\r',
     '\t': '\\t',
     '\v': '\\v',
-    '\0': '\\0',
+    '\u0000': '\\0',
     '\u2028': '\\u2028',
     '\u2029': '\\u2029',
   };
