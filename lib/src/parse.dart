@@ -3,24 +3,24 @@ import 'package:json5/src/syntax_exception.dart';
 import 'token.dart';
 import 'util.dart' as util;
 
-String source;
-String parseState;
-List stack;
-int pos;
-int line;
-int column;
-Token token;
-String key;
-Object root;
+late String source;
+String? parseState;
+late List stack;
+late int pos;
+late int line;
+late int column;
+late Token token;
+String? key;
+Object? root;
 
-Object parse(String text, reviver) {
+Object? parse(String text, reviver) {
   source = text;
   parseState = 'start';
   stack = [];
   pos = 0;
   line = 1;
   column = 0;
-  token = null;
+  // token = null;
   key = null;
   root = null;
 
@@ -32,7 +32,7 @@ Object parse(String text, reviver) {
     //     throw invalidParseState()
     // }
 
-    parseStates[parseState]();
+    parseStates[parseState!]!();
   } while (token.type != 'eof');
 
   if (reviver is Function) {
@@ -42,18 +42,18 @@ Object parse(String text, reviver) {
   return root;
 }
 
-List<Token> split(String text) {
+List<Token?> split(String text) {
   source = text;
   parseState = 'start';
   stack = [];
   pos = 0;
   line = 1;
   column = 0;
-  token = null;
+  // token = null;
   key = null;
   root = null;
 
-  var ret = <Token>[];
+  var ret = <Token?>[];
   for (;;) {
     token = lex();
     if (token.type == 'eof') {
@@ -80,11 +80,11 @@ dynamic internalize(holder, name, reviver) {
   return reviver.call(holder, name, value);
 }
 
-String lexState;
-String buffer;
-bool doubleQuote;
-var sign;
-String c;
+String? lexState;
+String? buffer;
+late bool doubleQuote;
+late var sign;
+String? c;
 
 // not null;
 Token lex() {
@@ -101,19 +101,19 @@ Token lex() {
     //     throw invalidLexState(lexState)
     // }
 
-    final token = lexStates[lexState]();
+    final token = lexStates[lexState!]!();
     if (token != null) {
       return token;
     }
   }
 }
 
-String peek() {
+String? peek() {
   if (pos >= 0 && pos < source.length) return source[pos];
   return null;
 }
 
-String read() {
+String? read() {
   final c = peek();
 
   if (c == '\n') {
@@ -132,7 +132,7 @@ String read() {
   return c;
 }
 
-Map<String, Token Function()> lexStates = {
+Map<String, Token? Function()> lexStates = {
   'default': () {
     switch (c) {
       case '\t':
@@ -170,7 +170,7 @@ Map<String, Token Function()> lexStates = {
     //     throw invalidLexState(parseState)
     // }
 
-    return lexStates[parseState]();
+    return lexStates[parseState!]!();
   },
   'comment': () {
     switch (c) {
@@ -337,7 +337,7 @@ Map<String, Token Function()> lexStates = {
         break;
     }
 
-    buffer += u;
+    buffer = buffer! + u;
     lexState = 'identifierName';
     return null;
   },
@@ -347,7 +347,7 @@ Map<String, Token Function()> lexStates = {
       case '_':
       case '\u200C':
       case '\u200D':
-        buffer += read();
+        buffer = buffer! + read()!;
         return null; //$
 
       case '\\':
@@ -357,7 +357,7 @@ Map<String, Token Function()> lexStates = {
     }
 
     if (util.isIdContinueChar(c)) {
-      buffer += read();
+      buffer = buffer! + read()!;
       return null; //$
     }
 
@@ -385,7 +385,7 @@ Map<String, Token Function()> lexStates = {
         break;
     }
 
-    buffer += u;
+    buffer = buffer! + u;
     lexState = 'identifierName';
     return null;
   },
@@ -430,19 +430,19 @@ Map<String, Token Function()> lexStates = {
   'zero': () {
     switch (c) {
       case '.':
-        buffer += read();
+        buffer = buffer! + read()!;
         lexState = 'decimalPoint';
         return null; //$
 
       case 'e':
       case 'E':
-        buffer += read();
+        buffer = buffer! + read()!;
         lexState = 'decimalExponent';
         return null; //$
 
       case 'x':
       case 'X':
-        buffer += read();
+        buffer = buffer! + read()!;
         lexState = 'hexadecimal';
         return null; //$
     }
@@ -452,27 +452,27 @@ Map<String, Token Function()> lexStates = {
   'decimalInteger': () {
     switch (c) {
       case '.':
-        buffer += read();
+        buffer = buffer! + read()!;
         lexState = 'decimalPoint';
         return null; //$
 
       case 'e':
       case 'E':
-        buffer += read();
+        buffer = buffer! + read()!;
         lexState = 'decimalExponent';
         return null; //$
     }
 
     if (util.isDigit(c)) {
-      buffer += read();
+      buffer = buffer! + read()!;
       return null; //$
     }
 
-    return newToken('numeric', sign * double.parse(buffer));
+    return newToken('numeric', sign * double.parse(buffer!));
   },
   'decimalPointLeading': () {
     if (util.isDigit(c)) {
-      buffer += read();
+      buffer = buffer! + read()!;
       lexState = 'decimalFraction';
       return null; //$
     }
@@ -483,46 +483,46 @@ Map<String, Token Function()> lexStates = {
     switch (c) {
       case 'e':
       case 'E':
-        buffer += read();
+        buffer = buffer! + read()!;
         lexState = 'decimalExponent';
         return null; //$
     }
 
     if (util.isDigit(c)) {
-      buffer += read();
+      buffer = buffer! + read()!;
       lexState = 'decimalFraction';
       return null; //$
     }
 
-    return newToken('numeric', sign * double.parse(buffer));
+    return newToken('numeric', sign * double.parse(buffer!));
   },
   'decimalFraction': () {
     switch (c) {
       case 'e':
       case 'E':
-        buffer += read();
+        buffer = buffer! + read()!;
         lexState = 'decimalExponent';
         return null; //$
     }
 
     if (util.isDigit(c)) {
-      buffer += read();
+      buffer = buffer! + read()!;
       return null; //$
     }
 
-    return newToken('numeric', sign * double.parse(buffer));
+    return newToken('numeric', sign * double.parse(buffer!));
   },
   'decimalExponent': () {
     switch (c) {
       case '+':
       case '-':
-        buffer += read();
+        buffer = buffer! + read()!;
         lexState = 'decimalExponentSign';
         return null; //$
     }
 
     if (util.isDigit(c)) {
-      buffer += read();
+      buffer = buffer! + read()!;
       lexState = 'decimalExponentInteger';
       return null; //$
     }
@@ -531,7 +531,7 @@ Map<String, Token Function()> lexStates = {
   },
   'decimalExponentSign': () {
     if (util.isDigit(c)) {
-      buffer += read();
+      buffer = buffer! + read()!;
       lexState = 'decimalExponentInteger';
       return null; //$
     }
@@ -540,15 +540,15 @@ Map<String, Token Function()> lexStates = {
   },
   'decimalExponentInteger': () {
     if (util.isDigit(c)) {
-      buffer += read();
+      buffer = buffer! + read()!;
       return null; //$
     }
 
-    return newToken('numeric', sign * double.parse(buffer));
+    return newToken('numeric', sign * double.parse(buffer!));
   },
   'hexadecimal': () {
     if (util.isHexDigit(c)) {
-      buffer += read();
+      buffer = buffer! + read()!;
       lexState = 'hexadecimalInteger';
       return null; //$
     }
@@ -557,17 +557,17 @@ Map<String, Token Function()> lexStates = {
   },
   'hexadecimalInteger': () {
     if (util.isHexDigit(c)) {
-      buffer += read();
+      buffer = buffer! + read()!;
       return null; //$
     }
 
-    return newToken('numeric', sign * double.parse(buffer));
+    return newToken('numeric', sign * double.parse(buffer!));
   },
   'string': () {
     switch (c) {
       case '\\':
         read();
-        buffer += escape();
+        buffer = buffer! + escape()!;
         return null; //$
 
       case '"':
@@ -576,7 +576,7 @@ Map<String, Token Function()> lexStates = {
           return newToken('string', buffer);
         }
 
-        buffer += read();
+        buffer = buffer! + read()!;
         return null; //$
 
       case "'":
@@ -585,7 +585,7 @@ Map<String, Token Function()> lexStates = {
           return newToken('string', buffer);
         }
 
-        buffer += read();
+        buffer = buffer! + read()!;
         return null; //$
 
       case '\n':
@@ -603,7 +603,7 @@ Map<String, Token Function()> lexStates = {
         }
     }
 
-    buffer += read();
+    buffer = buffer! + read()!;
     return null;
   },
   'start': () {
@@ -644,7 +644,7 @@ Map<String, Token Function()> lexStates = {
     }
 
     if (util.isIdStartChar(c)) {
-      buffer += read();
+      buffer = buffer! + read()!;
       lexState = 'identifierName';
       return null; //$
     }
@@ -699,7 +699,7 @@ Map<String, Token Function()> lexStates = {
   },
 };
 
-Token newToken(String type, Object value) {
+Token newToken(String type, Object? value) {
   return Token(type, value, line, column);
 }
 
@@ -716,7 +716,7 @@ void literal(String s) {
   }
 }
 
-String escape() {
+String? escape() {
   final c = peek();
   switch (c) {
     case 'b':
@@ -800,14 +800,14 @@ String hexEscape() {
     throw invalidChar(read());
   }
 
-  buffer += read();
+  buffer += read()!;
 
   c = peek();
   if (!util.isHexDigit(c)) {
     throw invalidChar(read());
   }
 
-  buffer += read();
+  buffer += read()!;
 
   return String.fromCharCode(int.parse(buffer, radix: 16));
 }
@@ -822,7 +822,7 @@ String unicodeEscape() {
       throw invalidChar(read());
     }
 
-    buffer += read();
+    buffer += read()!;
   }
 
   return String.fromCharCode(int.parse(buffer, radix: 16));
@@ -840,7 +840,7 @@ final Map<String, void Function()> parseStates = {
     switch (token.type) {
       case 'identifier':
       case 'string':
-        key = token.value;
+        key = token.value as String?;
         parseState = 'afterPropertyName';
         return null; //$
 
@@ -1029,15 +1029,15 @@ void pop() {
 
 SyntaxException invalidChar(c) {
   if (c == null) {
-    return syntaxError('JSON5: invalid end of input at ${line}:${column}');
+    return syntaxError('JSON5: invalid end of input at $line:$column');
   }
 
   return syntaxError(
-      "JSON5: invalid character '${formatChar(c)}' at ${line}:${column}");
+      "JSON5: invalid character '${formatChar(c)}' at $line:$column");
 }
 
 SyntaxException invalidEOF() {
-  return syntaxError('JSON5: invalid end of input at ${line}:${column}');
+  return syntaxError('JSON5: invalid end of input at $line:$column');
 }
 
 // This code is unreachable.
@@ -1052,8 +1052,7 @@ SyntaxException invalidEOF() {
 
 SyntaxException invalidIdentifier() {
   column -= 5;
-  return syntaxError(
-      'JSON5: invalid identifier character at ${line}:${column}');
+  return syntaxError('JSON5: invalid identifier character at $line:$column');
 }
 
 void separatorChar(c) {
@@ -1062,7 +1061,7 @@ void separatorChar(c) {
       "JSON5: '${formatChar(c)}' in strings is not valid ECMAScript; consider escaping");
 }
 
-String formatChar(String c) {
+String? formatChar(String? c) {
   const replacements = {
     "'": "\\'",
     '"': '\\"',
@@ -1078,7 +1077,7 @@ String formatChar(String c) {
     '\u2029': '\\u2029',
   };
 
-  if (replacements[c] != null) {
+  if (replacements[c!] != null) {
     return replacements[c];
   }
 

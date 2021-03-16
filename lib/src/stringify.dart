@@ -16,7 +16,7 @@ class _Stringify {
     if (space is num) {
       if (space > 0) {
         space = min<num>(10, space.floor());
-        gap = '          '.substring(0, space);
+        gap = '          '.substring(0, space as int?);
       }
     } else if (space is String) {
       gap = space.substring(0, 10);
@@ -26,7 +26,7 @@ class _Stringify {
   }
 
   String quoteString(String value) {
-    final quotes = {
+    final quotes = <String, dynamic>{
       "'": 0.1,
       '"': 0.2,
     };
@@ -65,7 +65,7 @@ class _Stringify {
       }
 
       if (replacements.containsKey(c)) {
-        product += replacements[c];
+        product += replacements[c]!;
         continue;
       }
 
@@ -78,18 +78,18 @@ class _Stringify {
       product += c;
     }
 
-    final quoteChar =
-        quote ?? quotes.keys.reduce((a, b) => (quotes[a] < quotes[b]) ? a : b);
+    final quoteChar = quote ??
+        quotes.keys.reduce((a, b) => (quotes[a]! < quotes[b]!) ? a : b);
 
     // FIXME replaceall + doall?
     product = product.replaceAll(
-        RegExp(quoteChar, dotAll: true), replacements[quoteChar]);
+        RegExp(quoteChar, dotAll: true), replacements[quoteChar]!);
 
     return quoteChar + product + quoteChar;
   }
 
   String serializeProperty(dynamic key, dynamic holder) {
-    Object value = holder[key];
+    Object? value = holder[key];
 
     if (value == null) return 'null';
     switch (value) {
@@ -110,10 +110,10 @@ class _Stringify {
     if (value is List) return serializeArray(value);
     if (value is Map) return serializeObject(value);
 
-    return null; // undefined
+    throw Exception('Cannot stringify $value'); // undefined
   }
 
-  String serializeKey(String key) {
+  String? serializeKey(String key) {
     if (key.isEmpty) {
       return quoteString(key);
     }
@@ -147,7 +147,7 @@ class _Stringify {
     for (final key in keys) {
       final propertyString = serializeProperty(key, value);
       if (propertyString != null) {
-        var member = serializeKey(key.toString()) + ':';
+        var member = serializeKey(key.toString())! + ':';
         if (gap != '') {
           member += ' ';
         }

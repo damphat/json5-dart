@@ -7,6 +7,10 @@ void main() {
   while (true) {
     stdout.write('json5>');
     var src = stdin.readLineSync();
+    if (src == null) {
+      print('break');
+      return;
+    }
     switch (src) {
       case '':
         continue;

@@ -6,7 +6,7 @@ void main() {
     // BUG:
     // '_InternalLinkedHashMap<dynamic, dynamic>' is not
     // a subtype of 'Map<String, dynamic>'
-    Map<String, dynamic> obj = JSON5.parse("{x: 1}");
+    Map<String, dynamic>? obj = JSON5.parse('{x: 1}');
     expect(obj, {'x': 1});
   });
 

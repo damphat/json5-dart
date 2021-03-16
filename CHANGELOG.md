@@ -1,3 +1,6 @@
+## 0.6.0
+- Migrating to null safety
+
 ## 0.5.5
 - hotfix: dart not support '\0' escape
 

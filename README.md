@@ -31,7 +31,6 @@ void main() {
 ```
 
 ## Current limitations
-- It can parse String only, stream is not support
 - Only serialize classes which implement List and Map
 
 ## References
