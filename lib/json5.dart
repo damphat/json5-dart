@@ -18,7 +18,7 @@ abstract class JSON5 {
   /// are supported.
   ///
   /// The altenative is [json5Encode(string)]
-  static String? stringify(dynamic object, {space = 0}) {
+  static String stringify(dynamic object, {space = 0}) {
     return render.stringify(object, null, space);
   }
 
