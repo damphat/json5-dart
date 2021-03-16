@@ -19,7 +19,7 @@ class _Stringify {
         gap = '          '.substring(0, space as int?);
       }
     } else if (space is String) {
-      gap = space.substring(0, 10);
+      gap = space.length > 10 ? space.substring(0, 10) : space;
     }
 
     return serializeProperty('', {'': value});
