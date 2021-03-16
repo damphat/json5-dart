@@ -1,6 +1,6 @@
 name: json5
 description: JSON for dart and flutter (a port version of json5 in javascript)
-version: 0.6.0
+version: 0.6.1
 homepage: https://github.com/damphat/json5-dart
 
 environment:

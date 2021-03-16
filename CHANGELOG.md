@@ -1,3 +1,8 @@
+## 0.6.1
+- feat: serialize iterable objects
+- fix: JSON.stringify return non-null String
+- fix: indentication can be number and string
+
 ## 0.6.0
 - Migrating to null safety
 
