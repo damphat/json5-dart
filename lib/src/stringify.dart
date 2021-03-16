@@ -110,6 +110,8 @@ class _Stringify {
     if (value is List) return serializeArray(value);
     if (value is Map) return serializeObject(value);
 
+    if (value is Iterable) return serializeArray(value.toList());
+
     throw Exception('Cannot stringify $value'); // undefined
   }
 
