@@ -21,6 +21,8 @@ void main() {
       ['\\udefA', '\udefA'],
       ['\\uBCDE', '\uBCDE'],
       ['\\uF012', '\uF012'],
+      ['\\x09', '\u0009'],
+      ['\\x90', '\u0090'],
     ];
 
     quote(String src) {
