@@ -1,3 +1,8 @@
+## 0.7.0
+- feat: toEncodable
+```dart
+    json5Encode(obj, toEncodable: (v) => v.toString())
+```
 ## 0.6.1
 - feat: serialize iterable objects
 - fix: JSON.stringify return non-null String

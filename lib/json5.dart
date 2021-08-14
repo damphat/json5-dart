@@ -18,8 +18,12 @@ abstract class JSON5 {
   /// are supported.
   ///
   /// The altenative is [json5Encode(string)]
-  static String stringify(dynamic object, {space = 0}) {
-    return render.stringify(object, null, space);
+  static String stringify(
+    dynamic object, {
+    space = 0,
+    Object? Function(Object? nonEncodable)? toEncodable,
+  }) {
+    return render.stringify(object, null, space, toEncodable);
   }
 
   /// Parses the string and return the json object.
@@ -39,8 +43,12 @@ abstract class JSON5 {
 /// are supported.
 ///
 /// The altenative is [JSON5.stringify(string)]
-String json5Encode(dynamic object, {space = 0}) {
-  return render.stringify(object, null, space);
+String json5Encode(
+  dynamic object, {
+  space = 0,
+  Object? Function(Object? nonEncodable)? toEncodable,
+}) {
+  return render.stringify(object, null, space, toEncodable);
 }
 
 /// Parses the string and return the json object.

@@ -8,10 +8,17 @@ class _Stringify {
   var replacerFunc;
   var gap = '';
   var quote;
+  Object? Function(Object? nonEncodable)? toEncodable;
 
-  String eval(dynamic value, replacer, space) {
+  String eval(
+    dynamic value,
+    replacer,
+    space,
+    Object? Function(Object? nonEncodable)? toEncodable,
+  ) {
     assert(replacer == null);
     assert(space is num || space is String);
+    this.toEncodable = toEncodable;
 
     if (space is num) {
       if (space > 0) {
@@ -91,26 +98,42 @@ class _Stringify {
   String serializeProperty(dynamic key, dynamic holder) {
     Object? value = holder[key];
 
-    if (value == null) return 'null';
-    switch (value) {
-      case true:
-        return 'true';
-      case false:
-        return 'false';
+    String? serializedValue(value) {
+      if (value == null) return 'null';
+      switch (value) {
+        case true:
+          return 'true';
+        case false:
+          return 'false';
+      }
+
+      if (value is String) {
+        return quoteString(value); // , false?
+      }
+
+      if (value is num) {
+        return value.toString();
+      }
+
+      if (value is List) return serializeArray(value);
+      if (value is Map) return serializeObject(value);
+
+      if (value is Iterable) return serializeArray(value.toList());
     }
 
-    if (value is String) {
-      return quoteString(value); // , false?
+    var result = serializedValue(value);
+    if (result != null) {
+      return result;
     }
 
-    if (value is num) {
-      return value.toString();
+    if (toEncodable != null) {
+      value = toEncodable!(value);
     }
 
-    if (value is List) return serializeArray(value);
-    if (value is Map) return serializeObject(value);
-
-    if (value is Iterable) return serializeArray(value.toList());
+    result = serializedValue(value);
+    if (result != null) {
+      return result;
+    }
 
     throw Exception('Cannot stringify $value'); // undefined
   }
@@ -215,6 +238,11 @@ class _Stringify {
   }
 }
 
-String stringify(dynamic value, replacer, space) {
-  return _Stringify().eval(value, replacer, space);
+String stringify(
+  dynamic value,
+  replacer,
+  space,
+  Object? toEncodable(Object? nonEncodable)?,
+) {
+  return _Stringify().eval(value, replacer, space, toEncodable);
 }
