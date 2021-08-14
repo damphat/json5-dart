@@ -25,7 +25,7 @@ void main() {
       ['\\x90', '\u0090'],
     ];
 
-    quote(String src) {
+    String quote(String src) {
       return '"$src"';
     }
 
