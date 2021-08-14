@@ -3,6 +3,21 @@ import 'dart:convert';
 import 'src/parse.dart' as parser;
 import 'src/stringify.dart' as render;
 
+Object? _toEncodable(dynamic nonEncodable) {
+  if (nonEncodable == null) return null;
+  try {
+    if (nonEncodable.toMap != null) return nonEncodable.toMap();
+    // ignore: empty_catches
+  } on NoSuchMethodError {}
+
+  try {
+    if (nonEncodable.toJson != null) return nonEncodable.toJson();
+    // ignore: empty_catches
+  } on NoSuchMethodError {}
+
+  return nonEncodable.toString();
+}
+
 /// [JSON5] contains 2 static methods [parse()] and [stringify()]
 ///
 /// The name [JSON5] is uppercase so that it compatible with document.
@@ -23,7 +38,7 @@ abstract class JSON5 {
     space = 0,
     Object? Function(Object? nonEncodable)? toEncodable,
   }) {
-    return render.stringify(object, null, space, toEncodable);
+    return render.stringify(object, null, space, toEncodable ?? _toEncodable);
   }
 
   /// Parses the string and return the json object.
@@ -48,7 +63,7 @@ String json5Encode(
   space = 0,
   Object? Function(Object? nonEncodable)? toEncodable,
 }) {
-  return render.stringify(object, null, space, toEncodable);
+  return render.stringify(object, null, space, toEncodable ?? _toEncodable);
 }
 
 /// Parses the string and return the json object.

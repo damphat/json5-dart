@@ -242,7 +242,7 @@ String stringify(
   dynamic value,
   replacer,
   space,
-  Object? toEncodable(Object? nonEncodable)?,
+  Object? Function(Object? nonEncodable)? toEncodable,
 ) {
   return _Stringify().eval(value, replacer, space, toEncodable);
 }
