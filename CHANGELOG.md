@@ -1,7 +1,8 @@
 ## 0.7.0
-- feat: toEncodable
+- feat: toEncodable parameter
+- feat: toDecodable is default to `toMap()` then `toJson()` then `toString()`
 ```dart
-    json5Encode(obj, toEncodable: (v) => v.toString())
+    json5Encode(obj, toEncodable: (v) => v.toMap())
 ```
 ## 0.6.1
 - feat: serialize iterable objects
