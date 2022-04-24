@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:json5/json5.dart';
 import 'package:test/test.dart';
 
@@ -7,6 +9,10 @@ void main() {
       expect(JSON5.parse('null'), isNull);
       expect(JSON5.parse('true'), isTrue);
       expect(JSON5.parse('false'), isFalse);
+      expect(JSON5.parse('0'), TypeMatcher<int>());
+      expect(JSON5.parse('1'), TypeMatcher<int>());
+      expect(JSON5.parse('0.0'), TypeMatcher<double>());
+      expect(JSON5.parse('1.0'), TypeMatcher<double>());
       expect(JSON5.parse('-90e+09'), -90e+09);
       expect(JSON5.parse('NaN'), isNaN);
       expect(JSON5.parse('Infinity'), double.infinity);

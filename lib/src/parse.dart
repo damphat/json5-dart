@@ -468,7 +468,7 @@ Map<String, Token? Function()> lexStates = {
       return null; //$
     }
 
-    return newToken('numeric', sign * double.parse(buffer!));
+    return newToken('numeric', sign * int.parse(buffer!));
   },
   'decimalPointLeading': () {
     if (util.isDigit(c)) {
