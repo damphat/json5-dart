@@ -119,6 +119,8 @@ class _Stringify {
       if (value is Map) return serializeObject(value);
 
       if (value is Iterable) return serializeArray(value.toList());
+
+      return null;
     }
 
     var result = serializedValue(value);
@@ -171,14 +173,12 @@ class _Stringify {
     var partial = [];
     for (final key in keys) {
       final propertyString = serializeProperty(key, value);
-      if (propertyString != null) {
-        var member = serializeKey(key.toString())! + ':';
-        if (gap != '') {
-          member += ' ';
-        }
-        member += propertyString;
-        partial.add(member);
+      var member = serializeKey(key.toString())! + ':';
+      if (gap != '') {
+        member += ' ';
       }
+      member += propertyString;
+      partial.add(member);
     }
 
     var final_;
@@ -215,7 +215,7 @@ class _Stringify {
     var partial = [];
     for (var i = 0; i < value.length; i++) {
       final propertyString = serializeProperty(i, value);
-      partial.add((propertyString != null) ? propertyString : 'null');
+      partial.add(propertyString);
     }
 
     var final_;

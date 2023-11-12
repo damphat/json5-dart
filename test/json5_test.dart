@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:json5/json5.dart';
 import 'package:test/test.dart';
 
