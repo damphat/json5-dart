@@ -1,5 +1,5 @@
 name: json5
-description: JSON5 for dart and flutter
+description: A lightweight library for encoding and decoding JSON5 with comments and trailing commas support.
 version: 0.8.0
 homepage: https://github.com/damphat/json5-dart
 
