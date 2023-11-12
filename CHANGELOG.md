@@ -1,3 +1,7 @@
+## 0.8.1
+
+- Updated package description, fixed analysis issues (#15)
+
 ## 0.8.0
 
 - feat: values without decimal point or exponent should be `int` type

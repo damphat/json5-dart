@@ -1,6 +1,6 @@
 name: json5
 description: A lightweight library for encoding and decoding JSON5 with comments and trailing commas support.
-version: 0.8.0
+version: 0.8.1
 homepage: https://github.com/damphat/json5-dart
 
 environment:
