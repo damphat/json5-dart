@@ -1,4 +1,4 @@
-## 0.8.1
+## 0.8.2
 
 - Replaced pedantic package with lints package, fixed some analysis issues (#16)
 
