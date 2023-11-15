@@ -181,11 +181,11 @@ class _Stringify {
       partial.add(member);
     }
 
-    var final_;
+    String final_;
     if (partial.isEmpty) {
       final_ = '{}';
     } else {
-      var properties;
+      String properties;
       if (gap == '') {
         properties = partial.join(',');
         final_ = '{' + properties + '}';
@@ -218,7 +218,7 @@ class _Stringify {
       partial.add(propertyString);
     }
 
-    var final_;
+    String final_;
     if (partial.isEmpty) {
       final_ = '[]';
     } else {
