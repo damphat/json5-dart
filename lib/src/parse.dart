@@ -83,7 +83,7 @@ dynamic internalize(holder, name, reviver) {
 String? lexState;
 String? buffer;
 late bool doubleQuote;
-late var sign;
+late int sign;
 String? c;
 
 // not null;
@@ -945,7 +945,7 @@ final Map<String, void Function()> parseStates = {
 
 bool isObject(dynamic value) => value is Map || value is List;
 void push() {
-  var value;
+  dynamic value;
 
   switch (token.type) {
     case 'punctuator':
