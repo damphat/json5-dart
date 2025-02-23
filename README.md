@@ -1,11 +1,11 @@
-## JSON5 for dart and flutter
+## JSON5 for Dart and Flutter
 ![Dart CI](https://github.com/damphat/json5-dart/workflows/Dart%20CI/badge.svg)
 
-This *dart-package* is a ported version of [json5](https://github.com/json5/json5) which is written in pure *javascript*.
+This Dart package is a port of [JSON5](https://github.com/json5/json5), originally written in pure JavaScript.
 
-We use the same algorithms, so we have the same behaviors, the same specification.
+It follows the same algorithms and specifications as the original JSON5, ensuring identical behavior.
 
-But dart have different name convention, see the code below.
+However, Dart has different naming conventions—see the example below.
 
 ## Usage
 
@@ -13,26 +13,23 @@ But dart have different name convention, see the code below.
 import 'package:json5/json5.dart';
 
 void main() {
-  var obj = JSON5.parse('{                '
-      '  /*  comment block  */            '
-      '  name: {first: "phat"},           '
-      '  lang: ["C++", "dart", "kotlin"], '
-      '  nums: [NaN, Infinity, -Infinity] '
-      '} // end object                    ');
+  var obj = JSON5.parse('''
+      {  
+        /* Comment block */  
+        name: { first: "Phat" },  
+        lang: ["C++", "Dart", "Kotlin"],  
+        nums: [NaN, Infinity, -Infinity]  
+      } // End object
+  ''');
 
   var compact = JSON5.stringify(obj);
-
   print(compact);
 
   var pretty = JSON5.stringify(obj, space: 2);
-
   print(pretty);
 }
 ```
 
-## Current limitations
-- Only serialize classes which implement List and Map
-
 ## References
-- [json5](https://json5.org/)
-- [json5 in javascript](https://github.com/json5/json5)
+- [JSON5 Official Site](https://json5.org/)
+- [JSON5 JavaScript Implementation](https://github.com/json5/json5)
